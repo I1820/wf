@@ -20,7 +20,15 @@ import (
 )
 
 func TestLocationSearch(t *testing.T) {
-	woeid := LocationSearch(35.807425, 51.398583)
+	woeid, err := LocationSearch(35.807425, 51.398583) // 18.20 coordinate
+	assert.NoError(t, err)
 
-	assert.Equal(t, woeid, 2251945)
+	assert.Equal(t, woeid, 2251945) // Tehran WOEID
+}
+
+func TestLocationForecast(t *testing.T) {
+	ws, err := LocationForecast(2251945) // Tehran WOEID
+	assert.NoError(t, err)
+
+	t.Log(ws)
 }
