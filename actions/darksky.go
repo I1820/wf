@@ -38,10 +38,10 @@ func DarkskyHandler(c buffalo.Context) error {
 		return c.Error(http.StatusBadRequest, err)
 	}
 
-	ws, err := darksky.ForecastRequest(rq.Latitude, rq.Longitude)
+	wr, err := darksky.ForecastRequest(rq.Latitude, rq.Longitude)
 	if err != nil {
 		return c.Error(http.StatusInternalServerError, err)
 	}
 
-	return c.Render(http.StatusOK, r.JSON(ws))
+	return c.Render(http.StatusOK, r.JSON(wr))
 }
