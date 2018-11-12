@@ -30,33 +30,34 @@ func init() {
 
 // ForecastData represents dark sky forecast data.
 type ForecastData struct {
-	Time    int64
-	Summary string
-	Icon    string
+	Time    int64  `json:"time"`
+	Summary string `json:"summary"`
+	Icon    string `json:"icon"`
 
-	SunriseTime int64
-	SunsetTime  int64
+	SunriseTime int64 `json:"sunriseTime"`
+	SunsetTime  int64 `json:"sunsetTime"`
 
-	MoonPhase float64
+	MoonPhase float64 `json:"moonPhase"`
 
-	TemperatureMin     float64
-	TemperatureMinTime int64
-	TemperatureMax     float64
-	TemperatureMaxTime int64
+	Temperature        float64 `json:"temperature"`
+	TemperatureMin     float64 `json:"temperatureMin"`
+	TemperatureMinTime int64   `json:"temperatureMinTime"`
+	TemperatureMax     float64 `json:"temperatureMax"`
+	TemperatureMaxTime int64   `json:"temperatureMaxTime"`
 }
 
 // ForecastResponse represents dark sky forecast response that contains
 // ForecastData in its fields.
 type ForecastResponse struct {
-	Latitude  float64
-	Longitude float64
-	Timezone  string
-	Currently ForecastData
+	Latitude  float64      `json:"latitude"`
+	Longitude float64      `json:"longitude"`
+	Timezone  string       `json:"timezone"`
+	Currently ForecastData `json:"currently"`
 	Daily     struct {
-		Summery string
-		Icon    string
-		Data    []ForecastData
-	}
+		Summery string         `json:"summery"`
+		Icon    string         `json:"icon"`
+		Data    []ForecastData `json:"data"`
+	} `json:"daily"`
 }
 
 // ForecastRequest returns the current weather conditions,
