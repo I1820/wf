@@ -18,6 +18,14 @@
   version = "v0.3.1"
 
 [[projects]]
+  digest = "1:2aff5edb9bccd2974090fddb17ca7ab05a3f5c983db567c30c7f0b53404f5783"
+  name = "github.com/ajg/form"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "cc2954064ec9ea8d93917f0f87456e11d7b881ad"
+  version = "v1.5"
+
+[[projects]]
   digest = "1:705c40022f5c03bf96ffeb6477858d88565064485a513abcd0f11a0911546cb6"
   name = "github.com/blang/semver"
   packages = ["."]
@@ -179,6 +187,14 @@
   version = "v1.0.7"
 
 [[projects]]
+  digest = "1:e0d550b6ee6db0ded97279521188d06b889f428bf93bfee7cd9f4ea1d9fa40b1"
+  name = "github.com/gobuffalo/httptest"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f5842bb8ce56c4b7902b3f411503899452221dd1"
+  version = "v1.0.4"
+
+[[projects]]
   branch = "master"
   digest = "1:25c5503db4bb94bcd224f2cf90589f87391a67a9c535ed0db9abe6af1109428e"
   name = "github.com/gobuffalo/logger"
@@ -217,6 +233,14 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "74f5a47f4d56946ce59a0179c76bd2bc112c1b85"
+
+[[projects]]
+  branch = "master"
+  digest = "1:09fa6d091e821158250363f83fc8efc38f3ff8f850df54578e65a7eb132649b1"
+  name = "github.com/gobuffalo/mw-csrf"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "446ff26e108b9a8933dfc854d37a68d5adf2c226"
 
 [[projects]]
   branch = "master"
@@ -270,6 +294,17 @@
   pruneopts = "UT"
   revision = "53115b9d3820a71af03939efc46e5ee2d6a76490"
   version = "v4.9.0"
+
+[[projects]]
+  digest = "1:6b6908b59273cb9f2d1dbd7cc6abea699c13395e6a629f1c5acbf0537e80f486"
+  name = "github.com/gobuffalo/suite"
+  packages = [
+    ".",
+    "fix",
+  ]
+  pruneopts = "UT"
+  revision = "9f2732522240ef14e12c0c01318f68e193395ecd"
+  version = "v2.4.0"
 
 [[projects]]
   digest = "1:67caa8474de61d17bd909ffac7818fa7abd5a4e5f8af05bc8edd4cfdda18ddff"
@@ -450,6 +485,14 @@
   pruneopts = "UT"
   revision = "ce869fe62d84875913170d186f91a34667e4c732"
   version = "v1.0.5"
+
+[[projects]]
+  digest = "1:ee507d64d378dab42383404914f805c93b18a967238b1e87d788824abb97f074"
+  name = "github.com/markbates/hmax"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "800e180dcd16937a4cc134c6aa8c8407e62ce880"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:3804a3a02964db8e6db3e5e7960ac1c1a9b12835642dd4f4ac4e56c749ec73eb"
@@ -652,9 +695,13 @@
   version = "v1.0.3"
 
 [[projects]]
-  digest = "1:18752d0b95816a1b777505a97f71c7467a8445b8ffb55631a7bf779f6ba4fa83"
+  digest = "1:5110e3d4f130772fd39e6ce8208ad1955b242ccfcc8ad9d158857250579c82f4"
   name = "github.com/stretchr/testify"
-  packages = ["assert"]
+  packages = [
+    "assert",
+    "require",
+    "suite",
+  ]
   pruneopts = "UT"
   revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
   version = "v1.2.2"
@@ -748,9 +795,11 @@
   input-imports = [
     "github.com/go-resty/resty",
     "github.com/gobuffalo/buffalo",
+    "github.com/gobuffalo/buffalo/render",
     "github.com/gobuffalo/envy",
     "github.com/gobuffalo/mw-contenttype",
     "github.com/gobuffalo/mw-paramlogger",
+    "github.com/gobuffalo/suite",
     "github.com/gobuffalo/x/sessions",
     "github.com/rs/cors",
     "github.com/stretchr/testify/assert",
