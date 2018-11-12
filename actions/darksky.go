@@ -22,8 +22,8 @@ import (
 
 // darksky request payload
 type darkskyReq struct {
-	Latitude  float64 `json:"lat" validate:"required"`
-	Longitude float64 `json:"long" validate:"required"`
+	Latitude  float64 `json:"lat" validate:"required,min=-90,max=90"`
+	Longitude float64 `json:"long" validate:"required,min=-180,max=180"`
 }
 
 // DarkskyHandler uses darksky API to forecast weather in give geolocation.
