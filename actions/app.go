@@ -5,6 +5,7 @@ import (
 	"github.com/gobuffalo/envy"
 	contenttype "github.com/gobuffalo/mw-contenttype"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
+	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/gobuffalo/x/sessions"
 	"github.com/rs/cors"
@@ -14,6 +15,7 @@ import (
 // application is being run. Default is "development".
 var ENV = envy.Get("GO_ENV", "development")
 var app *buffalo.App
+var validate *validator.Validate
 
 // App is where all routes and middleware for buffalo
 // should be defined. This is the nerve center of your
@@ -38,8 +40,15 @@ func App() *buffalo.App {
 			app.Use(paramlogger.ParameterLogger)
 		}
 
+		// validator
+		validate = validator.New()
+
 		// Routes
 		app.GET("/about", AboutHandler)
+		api := app.Group("/api")
+		{
+			api.POST("/darksky", DarkskyHandler)
+		}
 	}
 
 	return app
