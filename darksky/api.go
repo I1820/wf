@@ -42,11 +42,27 @@ type ForecastData struct {
 	TemperatureMaxTime int64
 }
 
+// ForecastResponse represents dark sky forecast response that contains
+// ForecastData in its fields.
+type ForecastResponse struct {
+	Latitude  float64
+	Longitude float64
+	Timezone  string
+	Currently ForecastData
+	Daily     struct {
+		Summery string
+		Icon    string
+		Data    []ForecastData
+	}
+}
+
 // ForecastRequest returns the current weather conditions,
 // a minute-by-minute forecast for the next hour (where available),
 // an hour-by-hour forecast for the next 48 hours, and a day-by-day forecast for the next week.
-func ForecastRequest(latt float64, long float64) error {
-	_, err := client.R().SetQueryParams(map[string]string{
+func ForecastRequest(latt float64, long float64) ([]ForecastData, error) {
+	var w ForecastResponse
+
+	_, err := client.R().SetResult(&w).SetQueryParams(map[string]string{
 		"exclude": "minutely,hourly,alerts,flags",
 		"lang":    "en",
 		"units":   "si",
@@ -55,7 +71,8 @@ func ForecastRequest(latt float64, long float64) error {
 		"key":      key,
 	}).Get("forecast/{key}/{lattlong}")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+
+	return w.Daily.Data, nil
 }
