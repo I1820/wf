@@ -20,8 +20,8 @@ import (
 )
 
 func TestForecastRequest(t *testing.T) {
-	ws, err := ForecastRequest(35.807425, 51.398583) // 18.20 coordinate
+	wr, err := ForecastRequest(35.807425, 51.398583) // 18.20 coordinate
 	assert.NoError(t, err)
 
-	t.Logf("%+v", ws)
+	t.Logf("%+v", wr)
 }

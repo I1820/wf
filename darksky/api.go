@@ -30,12 +30,15 @@ func init() {
 
 // ForecastData represents dark sky forecast data.
 type ForecastData struct {
-	Time               int64
-	Summary            string
-	Icon               string
-	SunriseTime        int64
-	SunsetTime         int64
-	MoonPhase          float64
+	Time    int64
+	Summary string
+	Icon    string
+
+	SunriseTime int64
+	SunsetTime  int64
+
+	MoonPhase float64
+
 	TemperatureMin     float64
 	TemperatureMinTime int64
 	TemperatureMax     float64
@@ -59,7 +62,7 @@ type ForecastResponse struct {
 // ForecastRequest returns the current weather conditions,
 // a minute-by-minute forecast for the next hour (where available),
 // an hour-by-hour forecast for the next 48 hours, and a day-by-day forecast for the next week.
-func ForecastRequest(latt float64, long float64) ([]ForecastData, error) {
+func ForecastRequest(latt float64, long float64) (ForecastResponse, error) {
 	var w ForecastResponse
 
 	_, err := client.R().SetResult(&w).SetQueryParams(map[string]string{
@@ -71,8 +74,8 @@ func ForecastRequest(latt float64, long float64) ([]ForecastData, error) {
 		"key":      key,
 	}).Get("forecast/{key}/{lattlong}")
 	if err != nil {
-		return nil, err
+		return w, err
 	}
 
-	return w.Daily.Data, nil
+	return w, nil
 }
