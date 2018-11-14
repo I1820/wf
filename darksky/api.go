@@ -39,11 +39,15 @@ type ForecastData struct {
 
 	MoonPhase float64 `json:"moonPhase"`
 
-	Temperature        float64 `json:"temperature"`
-	TemperatureMin     float64 `json:"temperatureMin"`
-	TemperatureMinTime int64   `json:"temperatureMinTime"`
-	TemperatureMax     float64 `json:"temperatureMax"`
-	TemperatureMaxTime int64   `json:"temperatureMaxTime"`
+	Temperature         float64 `json:"temperature"`
+	TemperatureLow      float64 `json:"temperatureLow"`
+	TemperatureLowTime  int64   `json:"temperatureMinTime"`
+	TemperatureHigh     float64 `json:"temperatureMax"`
+	TemperatureHighTime int64   `json:"temperatureMaxTime"`
+
+	Humidity    float64 `json:"humidity"`
+	WindBearing float64 `json:"windBearing"`
+	WindSpeed   float64 `json:"windSpeed"`
 }
 
 // ForecastResponse represents dark sky forecast response that contains
