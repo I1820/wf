@@ -41,9 +41,9 @@ type ForecastData struct {
 
 	Temperature         float64 `json:"temperature"`
 	TemperatureLow      float64 `json:"temperatureLow"`
-	TemperatureLowTime  int64   `json:"temperatureMinTime"`
-	TemperatureHigh     float64 `json:"temperatureMax"`
-	TemperatureHighTime int64   `json:"temperatureMaxTime"`
+	TemperatureLowTime  int64   `json:"temperatureLowTime"`
+	TemperatureHigh     float64 `json:"temperatureHigh"`
+	TemperatureHighTime int64   `json:"temperatureHighTime"`
 
 	Humidity    float64 `json:"humidity"`
 	WindBearing float64 `json:"windBearing"`
