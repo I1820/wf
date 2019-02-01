@@ -13,7 +13,6 @@ before_install:
   - PKGS=$(go list ./... ) # All the import paths
 
 install:
-  - go get github.com/gobuffalo/buffalo/buffalo
   - go mod tidy
   - go mod download
 
@@ -21,4 +20,4 @@ script:
   - go vet -v $PKGS                   # go vet is the official Go static analyzer
   - errcheck -verbose $PKGS           # Check for unchecked errors
   - golint -set_exit_status $PKGS     # One last linter
-  - buffalo test
+  - go test -v $PKGS
