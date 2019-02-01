@@ -17,9 +17,9 @@ func App() *gin.Engine {
 	app := gin.Default()
 	app.Use(gin.ErrorLogger())
 
-	// content-type middleware
 	app.Use(func(c *gin.Context) {
-		c.Header("Content-Type", c.NegotiateFormat("application/json"))
+		c.Writer.Header().Set("Content-Type", "application/json")
+		c.Next()
 	})
 
 	// Routes
