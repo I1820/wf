@@ -30,7 +30,7 @@ type darkskyReq struct {
 func DarkskyHandler(c *gin.Context) {
 	var rq darkskyReq
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if err := c.ShouldBindJSON(&rq); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err).JSON()
 		return
 	}
