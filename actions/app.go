@@ -8,14 +8,6 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-type DefaultValidator struct {
-	validator *validator.Validate
-}
-
-func (cv *DefaultValidator) Validate(i interface{}) error {
-	return cv.validator.Struct(i)
-}
-
 // App creates new instance of Echo and configures it
 func App() *echo.Echo {
 	app := echo.New()

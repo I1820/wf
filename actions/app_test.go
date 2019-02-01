@@ -16,14 +16,14 @@ package actions
 import (
 	"testing"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/suite"
 )
 
 // WFTestSuite is a test suite for wf component APIs.
 type WFTestSuite struct {
 	suite.Suite
-	engine *gin.Engine
+	engine *echo.Echo
 }
 
 // SetupSuite initiates wf test suite
