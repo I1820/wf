@@ -16,7 +16,7 @@ package darksky
 import (
 	"fmt"
 
-	"github.com/go-resty/resty"
+	"gopkg.in/resty.v1"
 )
 
 var client *resty.Client
