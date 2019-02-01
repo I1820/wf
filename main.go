@@ -15,12 +15,9 @@ import (
 func main() {
 	fmt.Println("18.20 at Sep 07 2016 7:20 IR721")
 
-	srv := &http.Server{
-		Addr:    ":6976",
-		Handler: actions.App(),
-	}
+	e := actions.App()
 	go func() {
-		if err := srv.ListenAndServe(); err != http.ErrServerClosed {
+		if err := e.Start(":6976"); err != http.ErrServerClosed {
 			log.Fatalf("API Service failed with %s", err)
 
 		}
@@ -34,7 +31,7 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	if err := srv.Shutdown(ctx); err != nil {
+	if err := e.Shutdown(ctx); err != nil {
 		log.Printf("API Service failed on exit: %s", err)
 
 	}

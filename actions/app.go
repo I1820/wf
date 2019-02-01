@@ -2,25 +2,32 @@ package actions
 
 import (
 	"github.com/I1820/wf/config"
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
+	"gopkg.in/go-playground/validator.v9"
 )
 
-// App creates new version of gin router
-func App() *gin.Engine {
+type DefaultValidator struct {
+	validator *validator.Validate
+}
+
+func (cv *DefaultValidator) Validate(i interface{}) error {
+	return cv.validator.Struct(i)
+}
+
+// App creates new instance of Echo and configures it
+func App() *echo.Echo {
+	app := echo.New()
+	app.Use(middleware.Logger())
+	app.Use(middleware.Recover())
+
 	if config.GetConfig().Debug {
-		gin.SetMode(gin.DebugMode)
-	} else {
-		gin.SetMode(gin.ReleaseMode)
+		app.Logger.SetLevel(log.DEBUG)
 	}
 
-	// Default With the Logger and Recovery middleware already attached
-	app := gin.Default()
-	app.Use(gin.ErrorLogger())
-
-	app.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Content-Type", "application/json")
-		c.Next()
-	})
+	// Validator
+	app.Validator = &DefaultValidator{validator.New()}
 
 	// Routes
 	app.GET("/about", AboutHandler)
