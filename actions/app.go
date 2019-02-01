@@ -1,54 +1,32 @@
 package actions
 
 import (
-	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/envy"
-	contenttype "github.com/gobuffalo/mw-contenttype"
-	paramlogger "github.com/gobuffalo/mw-paramlogger"
-	validator "gopkg.in/go-playground/validator.v9"
-
-	"github.com/gobuffalo/x/sessions"
-	"github.com/rs/cors"
+	"github.com/I1820/wf/config"
+	"github.com/gin-gonic/gin"
 )
 
-// ENV is used to help switch settings based on where the
-// application is being run. Default is "development".
-var ENV = envy.Get("GO_ENV", "development")
-var app *buffalo.App
-var validate *validator.Validate
+// App creates new version of gin router
+func App() *gin.Engine {
+	if config.GetConfig().Debug {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
-// App is where all routes and middleware for buffalo
-// should be defined. This is the nerve center of your
-// application.
-func App() *buffalo.App {
-	if app == nil {
-		app = buffalo.New(buffalo.Options{
-			Env:          ENV,
-			SessionStore: sessions.Null{},
-			PreWares: []buffalo.PreWare{
-				cors.Default().Handler,
-			},
-			SessionName: "_wf_session",
-		})
+	// Default With the Logger and Recovery middleware already attached
+	app := gin.Default()
+	app.Use(gin.ErrorLogger())
 
-		// If no content type is sent by the client
-		// the application/json will be set, otherwise the client's
-		// content type will be used.
-		app.Use(contenttype.Add("application/json"))
+	// content-type middleware
+	app.Use(func(c *gin.Context) {
+		c.Header("Content-Type", c.NegotiateFormat("application/json"))
+	})
 
-		if ENV == "development" {
-			app.Use(paramlogger.ParameterLogger)
-		}
-
-		// validator
-		validate = validator.New()
-
-		// Routes
-		app.GET("/about", AboutHandler)
-		api := app.Group("/api")
-		{
-			api.POST("/darksky", DarkskyHandler)
-		}
+	// Routes
+	app.GET("/about", AboutHandler)
+	api := app.Group("/api")
+	{
+		api.POST("/darksky", DarkskyHandler)
 	}
 
 	return app

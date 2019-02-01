@@ -17,31 +17,29 @@ import (
 	"net/http"
 
 	"github.com/I1820/wf/darksky"
-	"github.com/gobuffalo/buffalo"
+	"github.com/gin-gonic/gin"
 )
 
 // darksky request payload
 type darkskyReq struct {
-	Latitude  float64 `json:"lat" validate:"required,min=-90,max=90"`
-	Longitude float64 `json:"lng" validate:"required,min=-180,max=180"`
+	Latitude  float64 `json:"lat" binding:"required,min=-90,max=90"`
+	Longitude float64 `json:"lng" binding:"required,min=-180,max=180"`
 }
 
-// DarkskyHandler uses darksky API to forecast weather in give geolocation.
-func DarkskyHandler(c buffalo.Context) error {
+// DarkskyHandler uses darksky API to forecast weather in given geolocation.
+func DarkskyHandler(c *gin.Context) {
 	var rq darkskyReq
 
-	if err := c.Bind(&rq); err != nil {
-		return c.Error(http.StatusBadRequest, err)
-	}
-
-	if err := validate.Struct(rq); err != nil {
-		return c.Error(http.StatusBadRequest, err)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err).JSON()
+		return
 	}
 
 	wr, err := darksky.ForecastRequest(rq.Latitude, rq.Longitude)
 	if err != nil {
-		return c.Error(http.StatusInternalServerError, err)
+		c.AbortWithError(http.StatusInternalServerError, err).JSON()
+		return
 	}
 
-	return c.Render(http.StatusOK, r.JSON(wr))
+	c.JSON(http.StatusOK, wr)
 }
