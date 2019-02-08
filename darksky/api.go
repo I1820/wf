@@ -16,12 +16,11 @@ package darksky
 import (
 	"fmt"
 
+	"github.com/I1820/wf/config"
 	"gopkg.in/resty.v1"
 )
 
 var client *resty.Client
-
-const key = "9efe7055c41ec3cb18fddd528ec555a2" // terial dark sky key, allows up to 1,000 calls per day
 
 // init initiates resty client for metaweather website
 func init() {
@@ -76,7 +75,7 @@ func ForecastRequest(latt float64, long float64) (ForecastResponse, error) {
 		"units":   "si",
 	}).SetPathParams(map[string]string{
 		"lattlong": fmt.Sprintf("%f,%f", latt, long),
-		"key":      key,
+		"key":      config.GetConfig().Darksky.Key,
 	}).Get("forecast/{key}/{lattlong}")
 	if err != nil {
 		return w, err
