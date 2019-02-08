@@ -25,7 +25,10 @@ import (
 
 // Config holds all wf component configurations
 type Config struct {
-	Debug bool
+	Debug   bool
+	Darksky struct {
+		Key string
+	}
 }
 
 var instance Config
