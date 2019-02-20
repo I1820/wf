@@ -40,7 +40,7 @@ func DarkskyHandler(c echo.Context) error {
 
 	wr, err := darksky.ForecastRequest(rq.Latitude, rq.Longitude)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err)
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
 	return c.JSON(http.StatusOK, wr)
