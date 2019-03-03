@@ -20,14 +20,19 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// DarkskyHandler contains required information for using darksky APIs.
+type DarkskyHandler struct {
+	darksky.Darksky
+}
+
 // darksky request payload
 type darkskyReq struct {
 	Latitude  float64 `json:"lat" validate:"required,min=-90,max=90"`
 	Longitude float64 `json:"lng" validate:"required,min=-180,max=180"`
 }
 
-// DarkskyHandler uses darksky API to forecast weather in given geolocation.
-func DarkskyHandler(c echo.Context) error {
+// Forecast uses darksky API to forecast weather in given geolocation.
+func (d DarkskyHandler) Forecast(c echo.Context) error {
 	var rq darkskyReq
 
 	if err := c.Bind(&rq); err != nil {
@@ -38,7 +43,7 @@ func DarkskyHandler(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	wr, err := darksky.ForecastRequest(rq.Latitude, rq.Longitude)
+	wr, err := d.ForecastRequest(rq.Latitude, rq.Longitude)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}

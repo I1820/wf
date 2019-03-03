@@ -2,6 +2,7 @@ package actions
 
 import (
 	"github.com/I1820/wf/config"
+	"github.com/I1820/wf/darksky"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -25,7 +26,10 @@ func App() *echo.Echo {
 	app.GET("/about", AboutHandler)
 	api := app.Group("/api")
 	{
-		api.POST("/darksky", DarkskyHandler)
+		d := DarkskyHandler{
+			darksky.NewDarksky(config.GetConfig().Darksky.Key),
+		}
+		api.POST("/darksky", d.Forecast)
 	}
 
 	return app
