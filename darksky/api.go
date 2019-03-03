@@ -16,15 +16,22 @@ package darksky
 import (
 	"fmt"
 
-	"github.com/I1820/wf/config"
 	"gopkg.in/resty.v1"
 )
 
-var client *resty.Client
+// Darksky forecasts weather based on darksky APIs.
+// https://darksky.net/
+type Darksky struct {
+	client *resty.Client
+	key    string
+}
 
-// init initiates resty client for metaweather website
-func init() {
-	client = resty.New().SetHostURL("https://api.darksky.net/")
+// NewDarksky creates new instance of darksky APIs
+func NewDarksky(key string) Darksky {
+	return Darksky{
+		client: resty.New().SetHostURL("https://api.darksky.net/"),
+		key:    key,
+	}
 }
 
 // ForecastData represents dark sky forecast data.
@@ -66,16 +73,16 @@ type ForecastResponse struct {
 // ForecastRequest returns the current weather conditions,
 // a minute-by-minute forecast for the next hour (where available),
 // an hour-by-hour forecast for the next 48 hours, and a day-by-day forecast for the next week.
-func ForecastRequest(latt float64, long float64) (ForecastResponse, error) {
+func (d Darksky) ForecastRequest(latt float64, long float64) (ForecastResponse, error) {
 	var w ForecastResponse
 
-	_, err := client.R().SetResult(&w).SetQueryParams(map[string]string{
+	_, err := d.client.R().SetResult(&w).SetQueryParams(map[string]string{
 		"exclude": "minutely,hourly,alerts,flags",
 		"lang":    "en",
 		"units":   "si",
 	}).SetPathParams(map[string]string{
 		"lattlong": fmt.Sprintf("%f,%f", latt, long),
-		"key":      config.GetConfig().Darksky.Key,
+		"key":      d.key,
 	}).Get("forecast/{key}/{lattlong}")
 	if err != nil {
 		return w, err
