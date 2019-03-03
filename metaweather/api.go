@@ -27,7 +27,7 @@ type Location struct {
 	Title        string `json:"title"`         // Name of the location
 	LocationType string `json:"location_type"` // City|Region / State / Province|Country|Continent
 	WOEID        int    `json:"woeid"`         // Where on The Earth ID
-	Distance     int    `json:"distance"`      // Distance from given lattitude and longitude in meters
+	Distance     int    `json:"distance"`      // Distance from given latitude and longitude in meters
 }
 
 // Weather represents metaweather consolidated weathers in each day
