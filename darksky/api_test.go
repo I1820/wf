@@ -16,11 +16,14 @@ package darksky
 import (
 	"testing"
 
+	"github.com/I1820/wf/config"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestForecastRequest(t *testing.T) {
-	wr, err := ForecastRequest(35.807425, 51.398583) // 18.20 coordinate
+	darksky := NewDarksky(config.GetConfig().Darksky.Key)
+
+	wr, err := darksky.ForecastRequest(35.807425, 51.398583) // 18.20 coordinate
 	assert.NoError(t, err)
 
 	t.Logf("%+v", wr)
